@@ -1,11 +1,4 @@
 import NextAuth from "next-auth";
-import { SupabaseAdapter } from "@auth/supabase-adapter";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
 
 const BungieProvider = {
   id: "bungie",
@@ -47,13 +40,8 @@ const BungieProvider = {
 
 export const authOptions = {
   providers: [BungieProvider],
-  adapter: SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  }),
   callbacks: {
-    async session({ session, user, token }) {
-      // Add Bungie-specific data to session
+    async session({ session, token }) {
       if (token) {
         session.user.membershipId = token.membershipId;
         session.user.destinyMemberships = token.destinyMemberships;
@@ -62,9 +50,10 @@ export const authOptions = {
       return session;
     },
     async jwt({ token, user, account }) {
-      // Persist the OAuth access_token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
+      }
+      if (user) {
         token.membershipId = user.membershipId;
         token.destinyMemberships = user.destinyMemberships;
       }
