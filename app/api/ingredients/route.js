@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { getPlayerIngredients, getDestinyMembership } from "@/lib/bungie";
+import { getPlayerIngredients, getDestinyMembership } from "../../../lib/bungie.js";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
