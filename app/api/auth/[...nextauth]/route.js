@@ -4,15 +4,19 @@ const BungieProvider = {
   id: "bungie",
   name: "Bungie",
   type: "oauth",
-  wellKnown: "https://www.bungie.net/.well-known/openid-configuration",
   authorization: {
     url: "https://www.bungie.net/en/OAuth/Authorize",
-    params: { scope: "" }
+    params: { 
+      scope: "",
+      response_type: "code"
+    }
   },
-  token: "https://www.bungie.net/platform/app/oauth/token/",
+  token: {
+    url: "https://www.bungie.net/platform/app/oauth/token/",
+  },
   userinfo: {
     url: "https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/",
-    async request({ tokens, provider }) {
+    async request({ tokens }) {
       const response = await fetch(
         "https://www.bungie.net/Platform/User/GetMembershipsForCurrentUser/",
         {
@@ -60,6 +64,7 @@ export const authOptions = {
       return token;
     },
   },
+  debug: true,
   secret: process.env.NEXTAUTH_SECRET,
 };
 
