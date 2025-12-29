@@ -5,8 +5,11 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Dawning Ingredient Tracker',
+  title: 'Dawning Report',
   description: 'Track your Destiny 2 Dawning ingredients',
+  icons: {
+    icon: 'https://murporyhvykyfzzvuzkv.supabase.co/storage/v1/object/public/gaming_d2_dawning_images/dawning_icon_v1.png',
+  },
 }
 
 export default function RootLayout({ children }) {
